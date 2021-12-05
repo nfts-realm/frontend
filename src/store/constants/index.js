@@ -1,0 +1,18 @@
+// user
+export const SET_PROFILE = "SET_PROFILE";
+
+// nft
+export const NFT_SET_SELECTED = "NFT_SET_SELECTED";
+export const NFT_SET_ITEMS = "NFT_SET_ITEMS";
+
+// web3
+export const SET_WEB3_DATA = "SET_WEB3_DATA";
+export const UPDATE_CHAIN_ID = "UPDATE_CHAIN_ID";
+export const UPDATE_WEB3_USER_ADDRESS = "UPDATE_WEB3_USER_ADDRESS";
+
+// token price
+export const UPDATE_TOKEN_PRICE = "UPDATE_TOKEN_PRICE";
+
+// marketplace
+export const SET_MARKETPLACE_FEE_FOR_FANTOM = "SET_MARKETPLACE_FEE_FOR_FANTOM";
+export const SET_MARKETPLACE_FEE_FOR_TOKEN = "SET_MARKETPLACE_FEE_FOR_TOKEN";
