@@ -24,9 +24,13 @@ const fetchMarketplacePublicData = async (dispatch) => {
 export const useFetchPublicData = () => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   fetchMarketplacePublicData(dispatch);
+  // }, [dispatch]);
+
+  useInterval(() => {
     fetchMarketplacePublicData(dispatch);
-  }, [dispatch]);
+  }, 5000);
 };
 
 // Marketplace
