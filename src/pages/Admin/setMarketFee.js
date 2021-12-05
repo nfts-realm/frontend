@@ -25,7 +25,6 @@ function SetMarketFee() {
       res
         .wait()
         .then(async (result) => {
-          console.log(result);
           setIsProcessingFTM(false);
           toast.success("Market Fee For FTM Payment has been updated successfully!");
         })

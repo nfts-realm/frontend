@@ -58,7 +58,7 @@ function Search() {
       facets: ["*", "category", "creator", "isSale", "owner", "saleType"],
       facetFilters: [["category:games"], ["isSale:false"]],
     })
-    .then((res) => console.log("sssssssssssssssss", res));
+    .then((res) => console.log("search result:", res));
   return (
     <InstantSearch searchClient={searchClient} indexName="NFTs">
       <Header />

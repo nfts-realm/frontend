@@ -35,7 +35,6 @@ function PaymentToken() {
       res
         .wait()
         .then(async (result) => {
-          console.log(result);
           toast.success("Payment Token has been registered successfully!");
           setIsProcessing(false);
           setTokenAddress("");
@@ -45,7 +44,6 @@ function PaymentToken() {
         .catch((e) => {
           console.log(e);
           toast.error("Failed to set payment token!");
-
           setIsProcessing(false);
         });
     } catch (err) {
