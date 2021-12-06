@@ -228,7 +228,7 @@ function AuthorPage() {
   }, [id, searchText]);
 
   const saveProfile = async () => {
-    if (!firstName || !lastName || !nickName || !bio) {
+    if (!firstName || !nickName) {
       toast.error("Please input required fields");
       return;
     }
@@ -570,7 +570,7 @@ function AuthorPage() {
                         <div className="col-12 col-md-6 col-lg-4 col-xl-4">
                           <div className="sign__group">
                             <label className="sign__label" htmlFor="firstname">
-                              First name
+                              {`First name (required)`}
                             </label>
                             <input
                               id="firstname"
@@ -608,7 +608,7 @@ function AuthorPage() {
                         <div className="col-12 col-md-6 col-lg-4 col-xl-4">
                           <div className="sign__group">
                             <label className="sign__label" htmlFor="nickName">
-                              NickName
+                              {`NickName #required)`}
                             </label>
                             <input
                               id="nickName"
@@ -657,7 +657,7 @@ function AuthorPage() {
                               type="text"
                               name="twitter"
                               className="sign__input"
-                              placeholder="http://twitter.com/joindoe"
+                              placeholder="http://twitter.com/johndoe"
                               value={twitter || ""}
                               onChange={(e) => {
                                 setTwitter(e.target.value);
@@ -676,7 +676,7 @@ function AuthorPage() {
                               type="text"
                               name="telegram"
                               className="sign__input"
-                              placeholder="http://t.me/joindoe"
+                              placeholder="http://t.me/johndoe"
                               value={telegram || ""}
                               onChange={(e) => {
                                 setTelegram(e.target.value);
@@ -695,7 +695,7 @@ function AuthorPage() {
                               type="text"
                               name="instagram"
                               className="sign__input"
-                              placeholder="http://instagram.com/joindoe"
+                              placeholder="http://instagram.com/johndoe"
                               value={instagram || ""}
                               onChange={(e) => {
                                 setInstagram(e.target.value);
