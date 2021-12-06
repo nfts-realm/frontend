@@ -493,7 +493,7 @@ function Create() {
                       id="description"
                       name="description"
                       className="sign__textarea"
-                      placeholder="e. g. 'After purchasing you will able to received...'"
+                      placeholder="e. g. 'After purchasing you will be able to receive...'"
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                     ></textarea>
