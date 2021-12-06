@@ -5,6 +5,7 @@ import Header from "pages/Header";
 import Main from "pages/Main";
 import Footer from "pages/Footer";
 import Explore from "pages/Explore";
+import Marketplace from "pages/Marketplace";
 import Activity from "pages/Activity";
 import Asset from "pages/Asset";
 import Token from "pages/Token";
@@ -31,6 +32,7 @@ function Routes(props) {
         <Switch>
           <Route exact path="/" component={Main} />
           <Route path="/explore" component={Explore} />
+          <Route path="/marketplace" component={Marketplace} />
           <Route path="/activity" component={Activity} />
           <Route path="/item/:id" component={Asset} />
           <Route path="/token" component={Token} />

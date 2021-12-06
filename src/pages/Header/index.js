@@ -131,7 +131,19 @@ function Header() {
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                Discover Market
+                Discover
+              </Link>
+            </li>
+            <li className="header__nav-item">
+              <Link
+                className="header__nav-link"
+                to="/marketplace"
+                role="button"
+                id="dropdownMenu"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Marketplace
               </Link>
             </li>
             <li className="header__nav-item">

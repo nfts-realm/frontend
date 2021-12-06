@@ -11,10 +11,10 @@ import "styles/explore.css";
 
 const breadCrumbData = [
   { title: "Home", page: "/" },
-  { title: "Explorer", page: "/explorer" },
+  { title: "Marketplace", page: "/marketplace" },
 ];
 
-function Explore() {
+function Marketplace() {
   const [price, setPrice] = useState(100);
   const [cards, setCards] = useState([]);
   const [order, setOrder] = useState("new");
@@ -38,7 +38,7 @@ function Explore() {
       filter.push([`paymentType:${paymentType}`]);
       if (saleType !== "all") filter.push([`saleType:${saleType}`]);
       if (category !== "all") filter.push([`category:${category}`]);
-      filter.push([`isSale:${false}`]);
+      filter.push([`isSale:${true}`]);
 
       const res = await algolia.search(searchText, {
         hitsPerPage: 15,
@@ -85,7 +85,7 @@ function Explore() {
         .orderBy("price")
         .where("price", "<", price || 1)
         .where("paymentType", "==", paymentType)
-        .where("isSale", "==", false)
+        .where("isSale", "==", true)
         .limit(NFT_CNT_PER_PAGE)
         .orderBy(orderByFilter)
         .startAt(isNew ? 0 : pageNFT);
@@ -260,20 +260,6 @@ function Explore() {
                 <option value="other">Other</option>
               </select>
             </div>
-            {/* <div className="filter__checkboxes mb-3">
-              <input
-                id="type5"
-                type="checkbox"
-                name="type5"
-                checked={isSale}
-                onChange={(e) => {
-                  setIsSale(e.target.checked);
-                }}
-              />
-              <label htmlFor="type5" style={{ fontSize: 18, color: "white" }}>
-                On Sale
-              </label>
-            </div> */}
             <div onClick={() => handleReset()} className="nft-pointer">
               <p className="reset m-0">
                 <FaTimesCircle className="mr-2" />
@@ -311,4 +297,4 @@ function Explore() {
   );
 }
 
-export default Explore;
+export default Marketplace;
