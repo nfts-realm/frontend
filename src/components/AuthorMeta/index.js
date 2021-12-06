@@ -20,8 +20,6 @@ function AuthorMeta(props) {
   const { account } = useWeb3React();
   const [likes, setLikes] = useState(followers);
 
-  console.log("123123--->", props.data);
-
   useEffect(() => {
     setLikes(followers);
   }, [followers]);
