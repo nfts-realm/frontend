@@ -13,7 +13,7 @@ function Routes() {
             </div>
             <p className="footer__tagline">
               NFTs Realm is a next generation marketplace where artists and collectors can create, sell and collect
-              digital items secured with blockchain.
+              digital items secured on the blockchain.
             </p>
 
             <div className="footer__lang">
