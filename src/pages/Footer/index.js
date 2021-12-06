@@ -106,7 +106,7 @@ function Routes() {
               >
                 Design an NFT
               </a> */}
-              <a href=" https://t.me/club" target="_blank" rel="noreferrer">
+              <a href="https://t.me/nftsrealm" target="_blank" rel="noreferrer">
                 Telegram Community
               </a>
               {/* <a
