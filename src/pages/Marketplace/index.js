@@ -88,7 +88,8 @@ function Marketplace() {
         .where("isSale", "==", true)
         .limit(NFT_CNT_PER_PAGE)
         .orderBy(orderByFilter)
-        .startAt(isNew ? 0 : pageNFT);
+        .startAt(isNew ? 0 : pageNFT * NFT_CNT_PER_PAGE);
+
       if (saleType !== "all") nftDocsQuery = nftDocsQuery.where("saleType", "==", saleType);
       if (category !== "all") nftDocsQuery = nftDocsQuery.where("category", "==", category);
 
@@ -111,7 +112,9 @@ function Marketplace() {
       setTimeout(() => {
         setCards(isNew ? lists : [...cards, ...lists]);
       }, 1000);
-      setPageNFT(isNew ? 1 : pageNFT + 1);
+      if (nftDocs.docs.length >= NFT_CNT_PER_PAGE) {
+        setPageNFT(pageNFT + 1);
+      }
       setIsLoading(false);
     } catch (err) {
       console.log(err);

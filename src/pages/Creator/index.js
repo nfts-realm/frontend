@@ -103,7 +103,7 @@ function AuthorPage() {
       .where("owner", "==", id)
       .limit(NFT_CNT_PER_PAGE)
       .orderBy("createdDesc")
-      .startAt(isNew ? 0 : pageMy);
+      .startAt(isNew ? 0 : pageMy * NFT_CNT_PER_PAGE);
 
     const nftDocs = await nftDocsQuery.get();
 
@@ -122,7 +122,10 @@ function AuthorPage() {
     }
 
     setCards(isNew ? lists : [...cards, ...lists]);
-    setPageMy(isNew ? 1 : pageMy + 1);
+    // setPageMy(isNew ? 1 : pageMy + 1);
+    if (nftDocs.docs.length >= NFT_CNT_PER_PAGE) {
+      setPageMy(pageMy + 1);
+    }
   };
 
   const getMySale = async (isNew = false) => {
@@ -132,7 +135,7 @@ function AuthorPage() {
       .where("isSale", "==", true)
       .limit(NFT_CNT_PER_PAGE)
       .orderBy("createdDesc")
-      .startAt(isNew ? 0 : pageMy);
+      .startAt(isNew ? 0 : pageMy * NFT_CNT_PER_PAGE);
 
     const nftDocs = await nftDocsQuery.get();
 
@@ -151,7 +154,10 @@ function AuthorPage() {
     }
 
     setSaleCards(isNew ? lists : [...saleCards, ...lists]);
-    setPageSale(isNew ? 1 : pageSale + 1);
+    // setPageSale(isNew ? 1 : pageSale + 1);
+    if (nftDocs.docs.length >= NFT_CNT_PER_PAGE) {
+      setPageSale(pageSale + 1);
+    }
   };
 
   const getMyCreate = async (isNew = false) => {
@@ -160,7 +166,7 @@ function AuthorPage() {
       .where("creator", "==", id)
       .limit(NFT_CNT_PER_PAGE)
       .orderBy("createdDesc")
-      .startAt(isNew ? 0 : pageMy);
+      .startAt(isNew ? 0 : pageMy * NFT_CNT_PER_PAGE);
 
     const nftDocs = await nftDocsQuery.get();
 
@@ -179,7 +185,10 @@ function AuthorPage() {
     }
 
     setCreatedCards(isNew ? lists : [...createdCards, ...lists]);
-    setPageCreate(isNew ? 1 : pageCreate + 1);
+    // setPageCreate(isNew ? 1 : pageCreate + 1);
+    if (nftDocs.docs.length >= NFT_CNT_PER_PAGE) {
+      setPageCreate(pageCreate + 1);
+    }
   };
 
   const getMyLikes = async (isNew = false) => {
