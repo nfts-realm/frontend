@@ -337,7 +337,6 @@ function Create() {
               <h2>Create and List an item for sale</h2>
             </div>
             {/* end title */}
-
             {/* create form */}
             <form action="#" className="sign__form sign__form--create">
               <div className="row">
