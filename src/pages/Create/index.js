@@ -276,7 +276,7 @@ function Create() {
                 paymentType: paymentType,
                 time: moment().valueOf(),
               });
-              toast.success("Create NFT");
+              toast.success("NFT Created");
               setCreateProcess(false);
               setIsAccept(false);
               history.push(`/creator/${account}`);

@@ -462,7 +462,7 @@ function Item() {
             });
             setAuctionInfo(auction_info);
             setIsAccept(false);
-            toast.success("You have placed bid this auction");
+            toast.success("You placed a bid on this auction");
 
             firestore.collection("history").add({
               userId: account,

@@ -274,7 +274,7 @@ function AuthorPage() {
         .doc(account)
         .set(author)
         .then(() => {
-          toast.success("Update profile");
+          toast.success("Profile updated");
           dispatchProfile(author);
           setIsProcessing(false);
         })
