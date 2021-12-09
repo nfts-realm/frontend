@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-
+import ScrollMemory from "react-router-scroll-memory";
 import Header from "pages/Header";
 import Main from "pages/Main";
 import Footer from "pages/Footer";
@@ -28,6 +28,7 @@ function Routes(props) {
   return (
     <div>
       <BrowserRouter>
+        <ScrollMemory />
         <Header />
         <Switch>
           <Route exact path="/" component={Main} />
