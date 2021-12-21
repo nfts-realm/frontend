@@ -57,7 +57,7 @@ function Featured() {
         .update({ likes: temp, likesCount: temp.length, likesCountDesc: MAX_LIKES_CNT - temp.length })
         .then(() => {
           setFollow(temp);
-          toast.success(`You ${user_index === -1 ? "" : "un"}follow NFT`);
+          toast.success(`You ${user_index === -1 ? "" : "un"}followed NFT`);
         })
         .catch((err) => {
           toast.error(err);

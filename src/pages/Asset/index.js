@@ -395,7 +395,7 @@ function Item() {
             getHistory(id);
             setIsProcessing(false);
             setIsAccept(false);
-            toast.success("You bought a NFT successfully");
+            toast.success("You bought an NFT successfully");
           })
           .catch((err) => {
             toast.error("Failed to Buy");
@@ -416,7 +416,7 @@ function Item() {
     if (!setAuctionInfo) return;
     if (active) {
       if (price < item.price || (parseFloat(auctionInfo.amount) > 0 && price < item.price * 1.1)) {
-        toast.error("Bid amount must not less than minimum bid");
+        toast.error("Bid amount must not be less than minimum bid");
         return;
       }
       setIsProcessing(true);
@@ -478,12 +478,12 @@ function Item() {
             setIsProcessing(false);
           })
           .catch((err) => {
-            toast.error("Failed to bid auction");
+            toast.error("Failed to bid on auction");
             setIsBid(false);
             setIsProcessing(false);
           });
       } catch (err) {
-        toast.error("Failed to bid auction");
+        toast.error("Failed to bid on auction");
         setIsBid(false);
         setIsProcessing(false);
       }
@@ -564,7 +564,7 @@ function Item() {
               setShowUpdate(false);
               setIsProcessing(false);
               setIsAccept(false);
-              toast.success("You create an auction");
+              toast.success("You created an auction");
             }
           })
           .catch((err) => {

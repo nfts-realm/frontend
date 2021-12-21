@@ -26,7 +26,7 @@ function Author(props) {
 
   const followUser = async () => {
     if (id === account) {
-      toast.error("You can't fallow yourself.");
+      toast.error("You can't follow yourself.");
     } else {
       try {
         const user_index = likes.indexOf(account);
@@ -39,7 +39,7 @@ function Author(props) {
         }
         await firestore.collection("users").doc(id).update({ followers: temp });
         setLikes(temp);
-        toast.success(`You ${user_index === -1 ? "" : "un"}follow ${nickName}`);
+        toast.success(`You ${user_index === -1 ? "" : "un"}followed ${nickName}`);
         props.updateFollower(props.data.account);
       } catch (err) {
         toast.error("Error in following");

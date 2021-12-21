@@ -46,7 +46,7 @@ function Tabs(props) {
         .then(async (result) => {
           console.log(result);
           await firestore.collection("nfts").doc(docId).delete();
-          toast.success("The NFT has been burnt out successfully.");
+          toast.success("The NFT has been successfully burned.");
           setIsBurning(false);
           history.push("/explore");
         })
@@ -106,7 +106,7 @@ function Tabs(props) {
               owner: toAddress,
               ownerAvatar: avatar,
             });
-            toast.success("The NFT has been transferred successfuly.");
+            toast.success("The NFT has been successfully transferred.");
             setIsTransfer(false);
 
             history.push("/explore");

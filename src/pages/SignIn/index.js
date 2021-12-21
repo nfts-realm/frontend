@@ -31,7 +31,7 @@ function SignIn() {
         .signInWithEmailAndPassword(values.email, values.password)
         .then((res) => {
           if (!res.user.emailVerified) {
-            toast.error("Email does not verified yet. please verify your email");
+            toast.error("Email is not verified yet. Please verify your email");
           } else {
             history.push("/");
           }

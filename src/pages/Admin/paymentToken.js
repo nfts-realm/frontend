@@ -20,7 +20,7 @@ function PaymentToken() {
       return;
     }
     if (tokenAddress === "" || !isAddress(tokenAddress)) {
-      toast.error("Invalid token address!");
+      toast.error("Invalid token Address!");
       return;
     }
     if (payoutAddress === "" || !isAddress(payoutAddress)) {

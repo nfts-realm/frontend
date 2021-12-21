@@ -233,14 +233,14 @@ function AuthorPage() {
       return;
     }
     if (!nickName.startsWith("@")) {
-      toast.error('NickName must start with "@" symbol.');
+      toast.error('Nickname must start with "@" symbol.');
       return;
     }
     try {
       setIsProcessing(true);
       const res = await firestore.collection("users").where("nickName", "==", nickName).get();
       if (res.docs.length > 1 || (res.docs.length === 1 && res.docs[0].id !== account)) {
-        toast.error("Your nickName is already used. Please choose another one.");
+        toast.error("Your Nickname is already used. Please choose another one.");
         setIsProcessing(false);
         return;
       }
