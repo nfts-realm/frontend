@@ -100,6 +100,16 @@ function Header() {
     await activate(injectedConnector);
   };
 
+  const onClickMenu = () => {
+    const headerMenu = document.getElementById("header__menu");
+    headerMenu.setAttribute("style", "transform: translate3d(281px, 0, 0)");
+  };
+
+  const onCollapseMenu = () => {
+    const headerMenu = document.getElementById("header__menu");
+    headerMenu.setAttribute("style", "transform: translate3d(0px, 0, 0)");
+  };
+
   return (
     <header className="header">
       <div className="header__content">
@@ -108,7 +118,7 @@ function Header() {
             <img src="assets/img/logo/nftsRealm_logo.png" alt="" />
           </Link>
         </div>
-        <div className="header__menu">
+        <div className="header__menu" id="header__menu">
           <ul className="header__nav">
             <li className="header__nav-item">
               <Link
@@ -118,6 +128,7 @@ function Header() {
                 id="dropdownMenuHome"
                 aria-haspopup="true"
                 aria-expanded="false"
+                onClick={onClickMenu}
               >
                 Home
               </Link>
@@ -130,6 +141,7 @@ function Header() {
                 id="dropdownMenu"
                 aria-haspopup="true"
                 aria-expanded="false"
+                onClick={onClickMenu}
               >
                 Discover
               </Link>
@@ -142,6 +154,7 @@ function Header() {
                 id="dropdownMenu"
                 aria-haspopup="true"
                 aria-expanded="false"
+                onClick={onClickMenu}
               >
                 Marketplace
               </Link>
@@ -153,6 +166,7 @@ function Header() {
                 role="button"
                 aria-haspopup="true"
                 aria-expanded="false"
+                onClick={onClickMenu}
               >
                 Find People
               </Link>
@@ -226,7 +240,7 @@ function Header() {
           )}
         </div>
 
-        <button className="header__btn" type="button">
+        <button className="header__btn" type="button" onClick={onCollapseMenu}>
           <span></span>
           <span></span>
           <span></span>
