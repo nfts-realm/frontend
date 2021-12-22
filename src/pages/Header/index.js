@@ -101,11 +101,13 @@ function Header() {
   };
 
   const onClickMenu = () => {
+    if (window.innerWidth >= 1200) return;
     const headerMenu = document.getElementById("header__menu");
     headerMenu.setAttribute("style", "transform: translate3d(281px, 0, 0)");
   };
 
   const onCollapseMenu = () => {
+    if (window.innerWidth >= 1200) return;
     const headerMenu = document.getElementById("header__menu");
     headerMenu.setAttribute("style", "transform: translate3d(0px, 0, 0)");
   };
@@ -172,7 +174,7 @@ function Header() {
               </Link>
             </li>
             <li className="header__nav-item">
-              <Link to="/create" className="header__nav-link">
+              <Link to="/create" className="header__nav-link" onClick={onClickMenu}>
                 Create
               </Link>
             </li>
