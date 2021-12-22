@@ -8,16 +8,7 @@ import "./style.css";
 function Author(props) {
   const { account } = useWeb3React();
   const id = props.data.account;
-  const {
-    imageCover,
-    avatar,
-    firstName,
-    lastName,
-    nickName,
-    bio,
-    followers,
-    // price,
-  } = props.data;
+  const { imageCover, avatar, firstName, lastName, nickName, bio, followers, price } = props.data;
   const [likes, setLikes] = useState(followers);
 
   useEffect(() => {
@@ -78,7 +69,7 @@ function Author(props) {
         </h3>
         <p className="author__text">{shorten(bio, 80)}</p>
         <p className="author__text">
-          Total Sales: <span className="author__price"></span> FTM
+          Total Sales: <span className="author__price">{price}</span> FTM
         </p>
         <div className="author__wrap">
           <div className="author__followers">
