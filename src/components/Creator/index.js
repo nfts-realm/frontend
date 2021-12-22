@@ -69,7 +69,7 @@ function Author(props) {
         </h3>
         <p className="author__text">{shorten(bio, 80)}</p>
         <p className="author__text">
-          Total Sales: <span className="author__price">{price}</span> FTM
+          Total Sales: <span className="author__price">{price ? Number(price).toFixed(2) : 0}</span> FTM
         </p>
         <div className="author__wrap">
           <div className="author__followers">
