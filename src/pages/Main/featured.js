@@ -21,8 +21,9 @@ function Featured() {
   const getMaxNFT = async () => {
     setLoading(true);
     try {
-      const x = (await firestore.collection("nfts").orderBy("likesCount", "desc").get()).docs[0];
-      const temp = x.data();
+      const x = (await firestore.collection("nfts").orderBy("likesCount", "desc").get()).docs;
+      if (x.length === 0) return;
+      const temp = x[0].data();
       fetch(temp.tokenURI)
         .then((res) => res.json())
         .then((result) => {

@@ -19,7 +19,7 @@ function Tabs(props) {
   const [isBurning, setIsBurning] = useState(false);
   const history = useHistory();
 
-  const marketplaceContract = getMarketplaceContract(library?.getSigner());
+  const mpContract = getMarketplaceContract(library?.getSigner());
 
   const getStr = (type) => {
     if (type === 0) return "Created ";
@@ -40,7 +40,7 @@ function Tabs(props) {
     setIsShow(false);
     setIsBurning(true);
     try {
-      const res = await marketplaceContract.burn(nftCollection, tokenId);
+      const res = await mpContract.burn(nftCollection, tokenId);
       res
         .wait()
         .then(async (result) => {
@@ -78,7 +78,7 @@ function Tabs(props) {
     setIsTransfer(true);
 
     try {
-      const res = await marketplaceContract.giveaway(
+      const res = await mpContract.giveaway(
         toAddress,
         item.nftCollection,
         item.tokenId,
@@ -135,7 +135,7 @@ function Tabs(props) {
   //     return;
   //   }
   //   if (item.tokenId !== 0) {
-  //     const res = await marketplaceContract.updatePrice(
+  //     const res = await mpContract.updatePrice(
   //       item.tokenId,
   //       parseUnits(newPrice.toString())
   //     );

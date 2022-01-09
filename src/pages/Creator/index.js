@@ -13,6 +13,8 @@ import { algolia } from "utils/algolia";
 import { setUserProfile } from "store/actions";
 import { NFT_CNT_PER_PAGE, DEFAULT_COVER_IMAGE, DEFAULT_NICKNAME, DEFAULT_AVATAR } from "config/constants";
 
+const firstNameRegex = /^(?=.{1,40}$)[a-zA-Z]+(?:[-'\s][a-zA-Z]+)*$/;
+
 function AuthorPage() {
   const dispatch = useDispatch();
 
@@ -234,6 +236,14 @@ function AuthorPage() {
     }
     if (!nickName.startsWith("@")) {
       toast.error('Nickname must start with "@" symbol.');
+      return;
+    }
+    if (!firstNameRegex.test(firstName)) {
+      toast.error("Firstname is incorrect");
+      return;
+    }
+    if (!firstNameRegex.test(lastName)) {
+      toast.error("Lastname is incorrect");
       return;
     }
     try {
