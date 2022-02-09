@@ -63,7 +63,7 @@ function Create() {
 
   const history = useHistory();
 
-  const marketplaceContract = getMarketplaceContract(library?.getSigner());
+  const mpContract = getMarketplaceContract(library?.getSigner());
   const nftContract = getNftContract(library?.getSigner());
 
   useEffect(() => {
@@ -171,7 +171,7 @@ function Create() {
               await approve.wait();
             }
 
-            const res = await marketplaceContract.createAuction(
+            const res = await mpContract.createAuction(
               realmNftAddress,
               0,
               true,
@@ -276,7 +276,7 @@ function Create() {
                 paymentType: paymentType,
                 time: moment().valueOf(),
               });
-              toast.success("Create NFT");
+              toast.success("NFT Created");
               setCreateProcess(false);
               setIsAccept(false);
               history.push(`/creator/${account}`);
@@ -337,7 +337,6 @@ function Create() {
               <h2>Create and List an item for sale</h2>
             </div>
             {/* end title */}
-
             {/* create form */}
             <form action="#" className="sign__form sign__form--create">
               <div className="row">
@@ -493,7 +492,7 @@ function Create() {
                       id="description"
                       name="description"
                       className="sign__textarea"
-                      placeholder="e. g. 'After purchasing you will able to received...'"
+                      placeholder="e. g. 'After purchasing you will be able to receive...'"
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                     ></textarea>

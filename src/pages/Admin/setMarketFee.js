@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { useWeb3React } from "@web3-react/core";
-import { getMarketplaceContract } from "utils/web3";
+import { getMarketplaceStorageContract } from "utils/web3";
 
 function SetMarketFee() {
   const { library } = useWeb3React();
   // eslint-disable-next-line no-unused-vars
-  const [mainFee, setMainFee] = useState("7.5");
-  const [tokenFee, setTokenFee] = useState("5");
+  const [mainFee, setMainFee] = useState("");
+  const [tokenFee, setTokenFee] = useState("");
   const [isProcessingFTM, setIsProcessingFTM] = useState(false);
   const [isProcessingToken, setIsProcessingToken] = useState(false);
 
-  const marketplaceContract = getMarketplaceContract(library?.getSigner());
+  const mpStorageContract = getMarketplaceStorageContract(library?.getSigner());
 
   const setMarketFeeForFTM = async () => {
     if (mainFee === "" || parseFloat(mainFee) < 1) {
@@ -21,7 +21,7 @@ function SetMarketFee() {
     setIsProcessingFTM(true);
 
     try {
-      const res = await marketplaceContract.setMarketFeeForFantom(parseFloat(mainFee) * 10);
+      const res = await mpStorageContract.setMarketFeeForFTM(parseFloat(mainFee) * 10);
       res
         .wait()
         .then(async (result) => {
@@ -47,7 +47,7 @@ function SetMarketFee() {
     setIsProcessingToken(true);
 
     try {
-      const res = await marketplaceContract.setMarketFeeForToken(parseFloat(tokenFee) * 10);
+      const res = await mpStorageContract.setMarketFeeForToken(parseFloat(tokenFee) * 10);
       res
         .wait()
         .then(async (result) => {

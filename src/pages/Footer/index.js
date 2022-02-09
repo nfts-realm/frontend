@@ -13,7 +13,7 @@ function Routes() {
             </div>
             <p className="footer__tagline">
               NFTs Realm is a next generation marketplace where artists and collectors can create, sell and collect
-              digital items secured with blockchain.
+              digital items secured on the blockchain.
             </p>
 
             <div className="footer__lang">
@@ -106,7 +106,7 @@ function Routes() {
               >
                 Design an NFT
               </a> */}
-              <a href=" https://t.me/club" target="_blank" rel="noreferrer">
+              <a href="https://t.me/nftsrealm" target="_blank" rel="noreferrer">
                 Telegram Community
               </a>
               {/* <a

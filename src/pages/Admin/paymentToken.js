@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { useWeb3React } from "@web3-react/core";
 import { isAddress } from "@ethersproject/address";
-import { getMarketplaceContract } from "utils/web3";
+import { getMarketplaceStorageContract } from "utils/web3";
 
 function PaymentToken() {
   const { library, account } = useWeb3React();
@@ -12,7 +12,7 @@ function PaymentToken() {
   const [tokenName, setTokenName] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const marketplaceContract = getMarketplaceContract(library?.getSigner());
+  const mpStorageContract = getMarketplaceStorageContract(library?.getSigner());
 
   const setPaymentToken = async () => {
     if (tokenName === "") {
@@ -20,7 +20,7 @@ function PaymentToken() {
       return;
     }
     if (tokenAddress === "" || !isAddress(tokenAddress)) {
-      toast.error("Invalid token address!");
+      toast.error("Invalid token Address!");
       return;
     }
     if (payoutAddress === "" || !isAddress(payoutAddress)) {
@@ -29,26 +29,22 @@ function PaymentToken() {
     }
     setIsProcessing(true);
     try {
-      const res = await marketplaceContract.setTokenAddress(tokenName, tokenAddress, payoutAddress, {
+      await mpStorageContract.setTokenAddress(tokenName, payoutAddress, {
         from: account,
       });
-      res
-        .wait()
-        .then(async (result) => {
-          toast.success("Payment Token has been registered successfully!");
-          setIsProcessing(false);
-          setTokenAddress("");
-          setPayoutAddress("");
-          setTokenName("");
-        })
-        .catch((e) => {
-          console.log(e);
-          toast.error("Failed to set payment token!");
-          setIsProcessing(false);
-        });
-    } catch (err) {
+      await mpStorageContract.setPayoutAddress(tokenName, payoutAddress, {
+        from: account,
+      });
+
+      toast.success("Payment Token has been registered successfully!");
       setIsProcessing(false);
+      setTokenAddress("");
+      setPayoutAddress("");
+      setTokenName("");
+    } catch (e) {
+      console.log(e);
       toast.error("Failed to set payment token!");
+      setIsProcessing(false);
     }
   };
 

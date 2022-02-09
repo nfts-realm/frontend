@@ -12,6 +12,10 @@ export const getRealmNftAddress = () => {
 export const getMarketplaceAddress = () => {
   return getAddress(addresses.marketplace);
 };
+export const getMarketplaceStorageAddress = () => {
+  return getAddress(addresses.marketplaceStorage);
+};
+
 export const getDmdTokenAddress = () => {
   return getAddress(addresses.dmd);
 };

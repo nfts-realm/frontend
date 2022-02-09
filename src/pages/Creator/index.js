@@ -13,6 +13,8 @@ import { algolia } from "utils/algolia";
 import { setUserProfile } from "store/actions";
 import { NFT_CNT_PER_PAGE, DEFAULT_COVER_IMAGE, DEFAULT_NICKNAME, DEFAULT_AVATAR } from "config/constants";
 
+const firstNameRegex = /^(?=.{1,40}$)[a-zA-Z]+(?:[-'\s][a-zA-Z]+)*$/;
+
 function AuthorPage() {
   const dispatch = useDispatch();
 
@@ -103,7 +105,7 @@ function AuthorPage() {
       .where("owner", "==", id)
       .limit(NFT_CNT_PER_PAGE)
       .orderBy("createdDesc")
-      .startAt(isNew ? 0 : pageMy);
+      .startAt(isNew ? 0 : pageMy * NFT_CNT_PER_PAGE);
 
     const nftDocs = await nftDocsQuery.get();
 
@@ -122,7 +124,10 @@ function AuthorPage() {
     }
 
     setCards(isNew ? lists : [...cards, ...lists]);
-    setPageMy(isNew ? 1 : pageMy + 1);
+    // setPageMy(isNew ? 1 : pageMy + 1);
+    if (nftDocs.docs.length >= NFT_CNT_PER_PAGE) {
+      setPageMy(pageMy + 1);
+    }
   };
 
   const getMySale = async (isNew = false) => {
@@ -132,7 +137,7 @@ function AuthorPage() {
       .where("isSale", "==", true)
       .limit(NFT_CNT_PER_PAGE)
       .orderBy("createdDesc")
-      .startAt(isNew ? 0 : pageMy);
+      .startAt(isNew ? 0 : pageMy * NFT_CNT_PER_PAGE);
 
     const nftDocs = await nftDocsQuery.get();
 
@@ -151,7 +156,10 @@ function AuthorPage() {
     }
 
     setSaleCards(isNew ? lists : [...saleCards, ...lists]);
-    setPageSale(isNew ? 1 : pageSale + 1);
+    // setPageSale(isNew ? 1 : pageSale + 1);
+    if (nftDocs.docs.length >= NFT_CNT_PER_PAGE) {
+      setPageSale(pageSale + 1);
+    }
   };
 
   const getMyCreate = async (isNew = false) => {
@@ -160,7 +168,7 @@ function AuthorPage() {
       .where("creator", "==", id)
       .limit(NFT_CNT_PER_PAGE)
       .orderBy("createdDesc")
-      .startAt(isNew ? 0 : pageMy);
+      .startAt(isNew ? 0 : pageMy * NFT_CNT_PER_PAGE);
 
     const nftDocs = await nftDocsQuery.get();
 
@@ -179,7 +187,10 @@ function AuthorPage() {
     }
 
     setCreatedCards(isNew ? lists : [...createdCards, ...lists]);
-    setPageCreate(isNew ? 1 : pageCreate + 1);
+    // setPageCreate(isNew ? 1 : pageCreate + 1);
+    if (nftDocs.docs.length >= NFT_CNT_PER_PAGE) {
+      setPageCreate(pageCreate + 1);
+    }
   };
 
   const getMyLikes = async (isNew = false) => {
@@ -219,19 +230,27 @@ function AuthorPage() {
   }, [id, searchText]);
 
   const saveProfile = async () => {
-    if (!firstName || !lastName || !nickName || !bio) {
+    if (!firstName || !nickName) {
       toast.error("Please input required fields");
       return;
     }
     if (!nickName.startsWith("@")) {
-      toast.error('NickName must start with "@" symbol.');
+      toast.error('Nickname must start with "@" symbol.');
+      return;
+    }
+    if (!firstNameRegex.test(firstName)) {
+      toast.error("Firstname is incorrect");
+      return;
+    }
+    if (!firstNameRegex.test(lastName)) {
+      toast.error("Lastname is incorrect");
       return;
     }
     try {
       setIsProcessing(true);
       const res = await firestore.collection("users").where("nickName", "==", nickName).get();
       if (res.docs.length > 1 || (res.docs.length === 1 && res.docs[0].id !== account)) {
-        toast.error("Your nickName is already used. Please choose another one.");
+        toast.error("Your Nickname is already used. Please choose another one.");
         setIsProcessing(false);
         return;
       }
@@ -265,7 +284,7 @@ function AuthorPage() {
         .doc(account)
         .set(author)
         .then(() => {
-          toast.success("Update profile");
+          toast.success("Profile updated");
           dispatchProfile(author);
           setIsProcessing(false);
         })
@@ -561,7 +580,7 @@ function AuthorPage() {
                         <div className="col-12 col-md-6 col-lg-4 col-xl-4">
                           <div className="sign__group">
                             <label className="sign__label" htmlFor="firstname">
-                              First name
+                              {`First name (required)`}
                             </label>
                             <input
                               id="firstname"
@@ -599,7 +618,7 @@ function AuthorPage() {
                         <div className="col-12 col-md-6 col-lg-4 col-xl-4">
                           <div className="sign__group">
                             <label className="sign__label" htmlFor="nickName">
-                              NickName
+                              {`NickName #required)`}
                             </label>
                             <input
                               id="nickName"
@@ -648,7 +667,7 @@ function AuthorPage() {
                               type="text"
                               name="twitter"
                               className="sign__input"
-                              placeholder="http://twitter.com/joindoe"
+                              placeholder="http://twitter.com/johndoe"
                               value={twitter || ""}
                               onChange={(e) => {
                                 setTwitter(e.target.value);
@@ -667,7 +686,7 @@ function AuthorPage() {
                               type="text"
                               name="telegram"
                               className="sign__input"
-                              placeholder="http://t.me/joindoe"
+                              placeholder="http://t.me/johndoe"
                               value={telegram || ""}
                               onChange={(e) => {
                                 setTelegram(e.target.value);
@@ -686,7 +705,7 @@ function AuthorPage() {
                               type="text"
                               name="instagram"
                               className="sign__input"
-                              placeholder="http://instagram.com/joindoe"
+                              placeholder="http://instagram.com/johndoe"
                               value={instagram || ""}
                               onChange={(e) => {
                                 setInstagram(e.target.value);

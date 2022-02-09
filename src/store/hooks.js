@@ -2,18 +2,18 @@ import { useEffect } from "react";
 import { BigNumber } from "@ethersproject/bignumber";
 import { useWeb3React } from "@web3-react/core";
 import { useSelector, useDispatch } from "react-redux";
-import { getMarketplaceContract } from "utils/web3";
+import { getMarketplaceStorageContract } from "utils/web3";
 import useInterval from "hooks/useInterval";
 import { setMarketplaceFeeForFantom, setMarketplaceFeeForToken } from "store/actions";
 
 const fetchMarketplacePublicData = async (dispatch) => {
-  const marketplaceContract = getMarketplaceContract();
-  if (marketplaceContract) {
+  const mpStorageContract = getMarketplaceStorageContract();
+  if (mpStorageContract) {
     try {
-      const ftmFee = await marketplaceContract.marketFeeForFTM();
+      const ftmFee = await mpStorageContract.marketFeeForFTM();
       dispatch(setMarketplaceFeeForFantom((100 * ftmFee.toNumber()) / 1000));
 
-      const tokenFee = await marketplaceContract.marketFeeForToken();
+      const tokenFee = await mpStorageContract.marketFeeForToken();
       dispatch(setMarketplaceFeeForToken((100 * tokenFee.toNumber()) / 1000));
     } catch (error) {
       console.log("error", error);

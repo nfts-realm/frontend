@@ -13,12 +13,7 @@
       },
       {
         "internalType": "address",
-        "name": "dmdPaymentAddress_",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "dmdTokenAddress_",
+        "name": "mkStorage_",
         "type": "address"
       }
     ],
@@ -37,7 +32,7 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "nftContractAddress",
+        "name": "nftAddress",
         "type": "address"
       },
       {
@@ -54,31 +49,6 @@
       }
     ],
     "name": "AuctionBid",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "nftContractAddress",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "creator",
-        "type": "address"
-      }
-    ],
-    "name": "AuctionCanceled",
     "type": "event"
   },
   {
@@ -136,7 +106,7 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "nftContractAddress",
+        "name": "nftAddress",
         "type": "address"
       },
       {
@@ -162,6 +132,12 @@
         "internalType": "address",
         "name": "nftCreator",
         "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "isCancelled",
+        "type": "bool"
       }
     ],
     "name": "AuctionEnded",
@@ -170,6 +146,12 @@
   {
     "anonymous": false,
     "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "nftAddress",
+        "type": "address"
+      },
       {
         "indexed": false,
         "internalType": "uint256",
@@ -203,43 +185,6 @@
       }
     ],
     "name": "Giveaway",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "minter",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "price",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "nftID",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "uri",
-        "type": "string"
-      },
-      {
-        "indexed": false,
-        "internalType": "bool",
-        "name": "status",
-        "type": "bool"
-      }
-    ],
-    "name": "Minted",
     "type": "event"
   },
   {
@@ -348,31 +293,25 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "Received",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
         "name": "account",
         "type": "address"
       }
     ],
     "name": "Unpaused",
     "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "ERC721_INTERFACE_ID",
+    "outputs": [
+      {
+        "internalType": "bytes4",
+        "name": "",
+        "type": "bytes4"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
   },
   {
     "inputs": [],
@@ -416,24 +355,6 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_nftAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_tokenId",
-        "type": "uint256"
-      }
-    ],
-    "name": "_closeTrade",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "bool",
         "name": "_isNew",
         "type": "bool"
@@ -464,9 +385,9 @@
         "type": "address[]"
       },
       {
-        "internalType": "uint256[]",
+        "internalType": "uint16[]",
         "name": "_royalties",
-        "type": "uint256[]"
+        "type": "uint16[]"
       },
       {
         "internalType": "bool[]",
@@ -486,83 +407,6 @@
       {
         "internalType": "address",
         "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "adminRecoveryEnabled",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "auctions",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "duration",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "firstBidTime",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "reservePrice",
-        "type": "uint256"
-      },
-      {
-        "internalType": "string",
-        "name": "paymentType",
-        "type": "string"
-      },
-      {
-        "internalType": "uint8",
-        "name": "creatorFeePercent",
-        "type": "uint8"
-      },
-      {
-        "internalType": "address",
-        "name": "creator",
-        "type": "address"
-      },
-      {
-        "internalType": "address payable",
-        "name": "bidder",
-        "type": "address"
-      },
-      {
-        "internalType": "address payable",
-        "name": "fundsRecipient",
         "type": "address"
       }
     ],
@@ -638,9 +482,9 @@
         "type": "uint256"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "_royalty",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
         "internalType": "string",
@@ -682,6 +526,24 @@
         "internalType": "uint256",
         "name": "_tokenId",
         "type": "uint256"
+      }
+    ],
+    "name": "closeTrade",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_nftAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_tokenId",
+        "type": "uint256"
       },
       {
         "internalType": "bool",
@@ -694,9 +556,9 @@
         "type": "string"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint32",
         "name": "_duration",
-        "type": "uint256"
+        "type": "uint32"
       },
       {
         "internalType": "string",
@@ -707,11 +569,6 @@
         "internalType": "uint256",
         "name": "_reservePrice",
         "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "_creator",
-        "type": "address"
       }
     ],
     "name": "createAuction",
@@ -769,133 +626,6 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_nftAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_tokenId",
-        "type": "uint256"
-      }
-    ],
-    "name": "getAuction",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "amount",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "duration",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "firstBidTime",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "reservePrice",
-            "type": "uint256"
-          },
-          {
-            "internalType": "string",
-            "name": "paymentType",
-            "type": "string"
-          },
-          {
-            "internalType": "uint8",
-            "name": "creatorFeePercent",
-            "type": "uint8"
-          },
-          {
-            "internalType": "address",
-            "name": "creator",
-            "type": "address"
-          },
-          {
-            "internalType": "address payable",
-            "name": "bidder",
-            "type": "address"
-          },
-          {
-            "internalType": "address payable",
-            "name": "fundsRecipient",
-            "type": "address"
-          }
-        ],
-        "internalType": "struct MarketplaceStorage.Auction",
-        "name": "",
-        "type": "tuple"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_nftAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_tokenId",
-        "type": "uint256"
-      }
-    ],
-    "name": "getList",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "string",
-            "name": "paymentToken",
-            "type": "string"
-          },
-          {
-            "internalType": "uint256",
-            "name": "price",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "royalty",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address payable",
-            "name": "creator",
-            "type": "address"
-          },
-          {
-            "internalType": "address payable",
-            "name": "owner",
-            "type": "address"
-          },
-          {
-            "internalType": "bool",
-            "name": "status",
-            "type": "bool"
-          }
-        ],
-        "internalType": "struct MarketplaceStorage.List",
-        "name": "",
-        "type": "tuple"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
         "name": "_to",
         "type": "address"
       },
@@ -920,9 +650,9 @@
         "type": "uint256"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "_royalty",
-        "type": "uint256"
+        "type": "uint16"
       },
       {
         "internalType": "string",
@@ -936,75 +666,13 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "lists",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "paymentToken",
-        "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "price",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "royalty",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address payable",
-        "name": "creator",
-        "type": "address"
-      },
-      {
-        "internalType": "address payable",
-        "name": "owner",
-        "type": "address"
-      },
-      {
-        "internalType": "bool",
-        "name": "status",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [],
-    "name": "marketFeeForFTM",
+    "name": "mkStorage",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "contract IMarketplaceStorage",
         "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "marketFeeForToken",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -1059,118 +727,6 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "name": "payoutAddressMap",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_nftAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_tokenId",
-        "type": "uint256"
-      }
-    ],
-    "name": "recoverNFT",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_newMarketFeeForFTM",
-        "type": "uint256"
-      }
-    ],
-    "name": "setMarketFeeForFantom",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_newMarketFeeForToken",
-        "type": "uint256"
-      }
-    ],
-    "name": "setMarketFeeForToken",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "_paymentToken",
-        "type": "string"
-      },
-      {
-        "internalType": "address",
-        "name": "_tokenAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_payoutAddress",
-        "type": "address"
-      }
-    ],
-    "name": "setTokenAddress",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "name": "tokenAddressMap",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "turnOffAdminRecovery",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "unpauseContract",
     "outputs": [],
@@ -1196,13 +752,7 @@
       }
     ],
     "name": "updateTokenListingStatus",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -1230,32 +780,6 @@
       }
     ],
     "name": "updateTokenPrice",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "withdraw",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "_tokenName",
-        "type": "string"
-      }
-    ],
-    "name": "withdrawToken",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

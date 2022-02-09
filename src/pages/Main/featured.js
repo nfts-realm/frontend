@@ -21,8 +21,9 @@ function Featured() {
   const getMaxNFT = async () => {
     setLoading(true);
     try {
-      const x = (await firestore.collection("nfts").orderBy("likesCount", "desc").get()).docs[0];
-      const temp = x.data();
+      const x = (await firestore.collection("nfts").orderBy("likesCount", "desc").get()).docs;
+      if (x.length === 0) return;
+      const temp = x[0].data();
       fetch(temp.tokenURI)
         .then((res) => res.json())
         .then((result) => {
@@ -57,7 +58,7 @@ function Featured() {
         .update({ likes: temp, likesCount: temp.length, likesCountDesc: MAX_LIKES_CNT - temp.length })
         .then(() => {
           setFollow(temp);
-          toast.success(`You ${user_index === -1 ? "" : "un"}follow NFT`);
+          toast.success(`You ${user_index === -1 ? "" : "un"}followed NFT`);
         })
         .catch((err) => {
           toast.error(err);

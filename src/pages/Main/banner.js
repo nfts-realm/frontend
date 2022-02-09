@@ -30,9 +30,14 @@ function Banner() {
             Explore Marketplace
           </Link>
           <br />
-          <Link to="/explore" className="explore-btn my-1 mx-5 text-white">
+          <a
+            href="https://spookyswap.finance/swap?inputCurrency=0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83&outputCurrency=0x90e892fed501ae00596448aecf998c88816e5c0f"
+            className="explore-btn my-1 mx-5 text-white"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Buy $DMD
-          </Link>
+          </a>
         </div>
         <div>
           <img className="d-none d-lg-block" src="assets/img/logo/ftm_logo.png" height="200px" alt="bg-main-right" />
