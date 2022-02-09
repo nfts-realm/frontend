@@ -13,6 +13,8 @@ import { algolia } from "utils/algolia";
 import { setUserProfile } from "store/actions";
 import { NFT_CNT_PER_PAGE, DEFAULT_COVER_IMAGE, DEFAULT_NICKNAME, DEFAULT_AVATAR } from "config/constants";
 
+const firstNameRegex = /^(?=.{1,40}$)[a-zA-Z]+(?:[-'\s][a-zA-Z]+)*$/;
+
 function AuthorPage() {
   const dispatch = useDispatch();
 
@@ -233,14 +235,22 @@ function AuthorPage() {
       return;
     }
     if (!nickName.startsWith("@")) {
-      toast.error('NickName must start with "@" symbol.');
+      toast.error('Nickname must start with "@" symbol.');
+      return;
+    }
+    if (!firstNameRegex.test(firstName)) {
+      toast.error("Firstname is incorrect");
+      return;
+    }
+    if (!firstNameRegex.test(lastName)) {
+      toast.error("Lastname is incorrect");
       return;
     }
     try {
       setIsProcessing(true);
       const res = await firestore.collection("users").where("nickName", "==", nickName).get();
       if (res.docs.length > 1 || (res.docs.length === 1 && res.docs[0].id !== account)) {
-        toast.error("Your nickName is already used. Please choose another one.");
+        toast.error("Your Nickname is already used. Please choose another one.");
         setIsProcessing(false);
         return;
       }

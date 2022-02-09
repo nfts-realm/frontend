@@ -1,6 +1,12 @@
 import { ethers } from "ethers";
-import { getRealmNftAddress, getMarketplaceAddress, getPayTokenAddress } from "utils/addressHelpers";
+import {
+  getRealmNftAddress,
+  getMarketplaceAddress,
+  getMarketplaceStorageAddress,
+  getPayTokenAddress,
+} from "utils/addressHelpers";
 import MarketplaceAbi from "config/abi/marketplace.json";
+import MarketplaceStorageAbi from "config/abi/marketplaceStorage.json";
 import NftsRealmAbi from "config/abi/realmNft.json";
 import Erc20Abi from "config/abi/erc20.json";
 import { DEFAULT_NETWORK } from "config/constants";
@@ -37,6 +43,10 @@ export const getNftContract = (signer) => {
 
 export const getMarketplaceContract = (signer) => {
   return getContract(getMarketplaceAddress(), MarketplaceAbi, signer);
+};
+
+export const getMarketplaceStorageContract = (signer) => {
+  return getContract(getMarketplaceStorageAddress(), MarketplaceStorageAbi, signer);
 };
 
 export const getErc20TokenContract = (signer) => {

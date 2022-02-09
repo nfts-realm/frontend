@@ -14,7 +14,7 @@ import BreadCrumb from "components/BreadCrumb";
 import AssetItem from "components/AssetItem";
 import AssetAuthor from "components/AssetAuthor";
 import Tabs from "./Tabs";
-import { getNftContract, getMarketplaceContract, getPayTokenContract } from "utils/web3";
+import { getNftContract, getMarketplaceContract, getMarketplaceStorageContract, getPayTokenContract } from "utils/web3";
 import { getMarketplaceAddress, getRealmNftAddress } from "utils/addressHelpers";
 import { firestore } from "utils/firebase";
 import { setUserProfile, setNftSelectedItem } from "store/actions";
@@ -70,7 +70,8 @@ function Item() {
   const [saleType, setSaleType] = useState(item.saleType);
 
   const nftContract = getNftContract(library?.getSigner());
-  const marketplaceContract = getMarketplaceContract(library?.getSigner());
+  const mpContract = getMarketplaceContract(library?.getSigner());
+  const mpStorageContract = getMarketplaceStorageContract(library?.getSigner());
   const nftMarketplaceAddress = getMarketplaceAddress();
   const realmNftAddress = getRealmNftAddress();
 
@@ -154,16 +155,16 @@ function Item() {
 
     dispatchNftItem({ id, ...user, ...nftItem, ...nftInfo.data });
     if (active) {
-      // const cur_price = await marketplaceContract.listedMap(nftItem.tokenId);
+      // const cur_price = await mpContract.listedMap(nftItem.tokenId);
       // console.log(cur_price);
       // const prov = ethers.getDefaultProvider();
-      // const pp = await marketplaceContract.balanceOf((await prov.getSigners())[0].address);
+      // const pp = await mpContract.balanceOf((await prov.getSigners())[0].address);
 
       // const bal = await prov.getBalance(account);
 
       if (nftItem.tokenId !== 0) {
-        // const auctionInfo = await marketplaceContract.auctions(nftItem.tokenId);
-        const _auctionInfo = await marketplaceContract.getAuction(nftItem.nftCollection, nftItem.tokenId);
+        // const auctionInfo = await mpContract.auctions(nftItem.tokenId);
+        const _auctionInfo = await mpStorageContract.auctions(nftItem.nftCollection, nftItem.tokenId);
         setAuctionInfo(_auctionInfo);
       }
     }
@@ -182,8 +183,8 @@ function Item() {
       }
       if (item.isSale) {
         if (item.tokenId !== 0) {
-          // const res = await marketplaceContract.closeTrade(item.tokenId);
-          const res = await marketplaceContract._closeTrade(item.nftCollection, item.tokenId);
+          // const res = await mpContract.closeTrade(item.tokenId);
+          const res = await mpContract.closeTrade(item.nftCollection, item.tokenId);
           await res.wait();
         }
         await firestore.collection("nfts").doc(id).update({
@@ -217,7 +218,7 @@ function Item() {
               await approve.wait();
             }
 
-            const res = await marketplaceContract.openTrade(
+            const res = await mpContract.openTrade(
               item.nftCollection,
               item.tokenId,
               parseUnits(newPrice.toString()),
@@ -314,7 +315,7 @@ function Item() {
         let res;
         if (tokenId === 0) {
           if (paymentType === "FTM") {
-            res = await marketplaceContract.buyNew(
+            res = await mpContract.buyNew(
               nftCollection,
               // tokenId,
               creator,
@@ -330,7 +331,7 @@ function Item() {
             await approve.wait();
             console.log(item, "buy new");
 
-            res = await marketplaceContract.buyNew(
+            res = await mpContract.buyNew(
               nftCollection,
               // tokenId,
               creator,
@@ -342,7 +343,7 @@ function Item() {
           }
         } else {
           if (paymentType === "FTM") {
-            res = await marketplaceContract.buy(nftCollection, tokenId, paymentType, parseUnits(price.toString()), {
+            res = await mpContract.buy(nftCollection, tokenId, paymentType, parseUnits(price.toString()), {
               from: account,
               value: parseUnits(price.toString()),
             });
@@ -350,7 +351,7 @@ function Item() {
             const tokenContract = getPayTokenContract(paymentType, library?.getSigner());
             const approve = await tokenContract.approve(nftMarketplaceAddress, parseUnits(price.toString()));
             await approve.wait();
-            res = await marketplaceContract.buy(nftCollection, tokenId, paymentType, parseUnits(price.toString()));
+            res = await mpContract.buy(nftCollection, tokenId, paymentType, parseUnits(price.toString()));
           }
         }
 
@@ -395,7 +396,7 @@ function Item() {
             getHistory(id);
             setIsProcessing(false);
             setIsAccept(false);
-            toast.success("You bought a NFT successfully");
+            toast.success("You bought an NFT successfully");
           })
           .catch((err) => {
             toast.error("Failed to Buy");
@@ -416,7 +417,7 @@ function Item() {
     if (!setAuctionInfo) return;
     if (active) {
       if (price < item.price || (parseFloat(auctionInfo.amount) > 0 && price < item.price * 1.1)) {
-        toast.error("Bid amount must not less than minimum bid");
+        toast.error("Bid amount must not be less than minimum bid");
         return;
       }
       setIsProcessing(true);
@@ -431,18 +432,18 @@ function Item() {
         const { nftCollection, tokenId, paymentType } = item;
         let res;
         if (paymentType === "FTM") {
-          res = await marketplaceContract.createBid(nftCollection, tokenId, paymentType, parseUnits(price.toString()), {
+          res = await mpContract.createBid(nftCollection, tokenId, paymentType, parseUnits(price.toString()), {
             value: parseUnits(price.toString()),
           });
         } else {
-          res = await marketplaceContract.createBid(nftCollection, tokenId, paymentType, parseUnits(price.toString()));
+          res = await mpContract.createBid(nftCollection, tokenId, paymentType, parseUnits(price.toString()));
         }
 
         res
           .wait()
           .then(async (result) => {
-            // const auction_info = await marketplaceContract.auctions(tokenId);
-            const auction_info = await marketplaceContract.getAuction(nftCollection, tokenId);
+            // const auction_info = await mpContract.auctions(tokenId);
+            const auction_info = await mpStorageContract.auctions(nftCollection, tokenId);
 
             await firestore
               .collection("nfts")
@@ -478,12 +479,12 @@ function Item() {
             setIsProcessing(false);
           })
           .catch((err) => {
-            toast.error("Failed to bid auction");
+            toast.error("Failed to bid on auction");
             setIsBid(false);
             setIsProcessing(false);
           });
       } catch (err) {
-        toast.error("Failed to bid auction");
+        toast.error("Failed to bid on auction");
         setIsBid(false);
         setIsProcessing(false);
       }
@@ -509,7 +510,7 @@ function Item() {
           const approve = await nftContract.setApprovalForAll(nftMarketplaceAddress, true);
           await approve.wait();
         }
-        const res = await marketplaceContract.createAuction(
+        const res = await mpContract.createAuction(
           nftCollection,
           tokenId,
           tokenId === 0,
@@ -547,8 +548,8 @@ function Item() {
                 time: (parseInt(args.duration) + parseInt(args.auctionStart)) * 1000,
                 price: parseFloat(newPrice),
               });
-              // const auction_info = await marketplaceContract.auctions(parseInt(args.tokenId));
-              const auction_info = await marketplaceContract.getAuction(nftCollection, parseInt(args.tokenId));
+              // const auction_info = await mpContract.auctions(parseInt(args.tokenId));
+              const auction_info = await mpContract.auctions(nftCollection, parseInt(args.tokenId));
 
               setAuctionInfo(auction_info);
               firestore.collection("history").add({
@@ -564,7 +565,7 @@ function Item() {
               setShowUpdate(false);
               setIsProcessing(false);
               setIsAccept(false);
-              toast.success("You create an auction");
+              toast.success("You created an auction");
             }
           })
           .catch((err) => {
@@ -589,7 +590,7 @@ function Item() {
       setIsProcessing(true);
       try {
         const { nftCollection, tokenId } = item;
-        const res = await marketplaceContract.cancelAuction(nftCollection, tokenId);
+        const res = await mpContract.cancelAuction(nftCollection, tokenId);
         res
           .wait()
           .then(async (result) => {
@@ -646,7 +647,7 @@ function Item() {
           const approve = await nftContract.setApprovalForAll(nftMarketplaceAddress, true);
           await approve.wait();
         }
-        const res = await marketplaceContract.endAuction(nftCollection, tokenId);
+        const res = await mpContract.endAuction(nftCollection, tokenId);
         res
           .wait()
           .then(async (result) => {
@@ -774,7 +775,7 @@ function Item() {
   //       // const ccreator = await nftContract.creatorMap(i);
   //       // const cprice = await nftContract.price(i);
   //       // const cowner = await nftContract.ownerMap(i);
-  //       // // const bowner = await marketplaceContract.ownerOf(i);
+  //       // // const bowner = await mpContract.ownerOf(i);
   //       // const croyalty = await nftContract.royaltyMap(i);
   //       // const clist = await nftContract.listedMap(i);
   //       // const uris = await nftContract.tokenURI(i);
@@ -814,9 +815,9 @@ function Item() {
   //       // );
   //     }
   //     // console.log(c, a, b);
-  //     // await marketplaceContract.addCreatorMap(false, a, b, c, d, e, f);
+  //     // await mpContract.addCreatorMap(false, a, b, c, d, e, f);
   //     console.log("done");
-  //     await marketplaceContract.mintAll(c, b, a);
+  //     await mpContract.mintAll(c, b, a);
   //   }
   // };
   // const sss = async () => {
@@ -857,7 +858,7 @@ function Item() {
   //     //   }
   //     // }
   //     // console.log(c, a, b);
-  //     // await marketplaceContract.mintAll(c, a, b);
+  //     // await mpContract.mintAll(c, a, b);
   //     // console.log("done");
   //   }
   // };

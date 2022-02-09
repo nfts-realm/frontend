@@ -38,7 +38,7 @@ function AssetItem(props) {
         .update({ likes: temp, likesCount: temp.length, likesCountDesc: MAX_LIKES_CNT - temp.length })
         .then(() => {
           setFollow(temp);
-          toast.success(`You ${user_index === -1 ? "" : "un"}like the NFT`);
+          toast.success(`You ${user_index === -1 ? "" : "un"}liked the NFT`);
         })
         .catch((err) => {
           toast.error(err);

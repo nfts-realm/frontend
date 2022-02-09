@@ -99,13 +99,16 @@ function Explore() {
       if (nftDocs && nftDocs.docs.length > 0) {
         for (let i = 0; i < nftDocs.docs.length; i++) {
           const nftData = { id: nftDocs.docs[i].id, ...nftDocs.docs[i].data() };
-          await fetch(nftData.tokenURI)
-            .then((res) => res.json())
-            .then((result) => {
-              const nftDataInDetail =
-                result !== undefined && result !== null ? { ...nftData, ...result } : { ...nftData };
-              lists.push(nftDataInDetail);
-            });
+
+          try {
+            await fetch(nftData.tokenURI)
+              .then((res) => res.json())
+              .then((result) => {
+                const nftDataInDetail =
+                  result !== undefined && result !== null ? { ...nftData, ...result } : { ...nftData };
+                lists.push(nftDataInDetail);
+              });
+          } catch (err2) {}
         }
       }
 

@@ -8,16 +8,7 @@ import "./style.css";
 function Author(props) {
   const { account } = useWeb3React();
   const id = props.data.account;
-  const {
-    imageCover,
-    avatar,
-    firstName,
-    lastName,
-    nickName,
-    bio,
-    followers,
-    // price,
-  } = props.data;
+  const { imageCover, avatar, firstName, lastName, nickName, bio, followers, price } = props.data;
   const [likes, setLikes] = useState(followers);
 
   useEffect(() => {
@@ -26,7 +17,7 @@ function Author(props) {
 
   const followUser = async () => {
     if (id === account) {
-      toast.error("You can't fallow yourself.");
+      toast.error("You can't follow yourself.");
     } else {
       try {
         const user_index = likes.indexOf(account);
@@ -39,7 +30,7 @@ function Author(props) {
         }
         await firestore.collection("users").doc(id).update({ followers: temp });
         setLikes(temp);
-        toast.success(`You ${user_index === -1 ? "" : "un"}follow ${nickName}`);
+        toast.success(`You ${user_index === -1 ? "" : "un"}followed ${nickName}`);
         props.updateFollower(props.data.account);
       } catch (err) {
         toast.error("Error in following");
@@ -78,7 +69,7 @@ function Author(props) {
         </h3>
         <p className="author__text">{shorten(bio, 80)}</p>
         <p className="author__text">
-          Total Sales: <span className="author__price"></span> FTM
+          Total Sales: <span className="author__price">{price ? Number(price).toFixed(2) : 0}</span> FTM
         </p>
         <div className="author__wrap">
           <div className="author__followers">

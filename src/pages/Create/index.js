@@ -63,7 +63,7 @@ function Create() {
 
   const history = useHistory();
 
-  const marketplaceContract = getMarketplaceContract(library?.getSigner());
+  const mpContract = getMarketplaceContract(library?.getSigner());
   const nftContract = getNftContract(library?.getSigner());
 
   useEffect(() => {
@@ -171,7 +171,7 @@ function Create() {
               await approve.wait();
             }
 
-            const res = await marketplaceContract.createAuction(
+            const res = await mpContract.createAuction(
               realmNftAddress,
               0,
               true,
